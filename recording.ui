@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>869</width>
+    <width>870</width>
     <height>553</height>
    </rect>
   </property>
@@ -187,20 +187,23 @@
     </rect>
    </property>
    <property name="plainText">
-    <string>0.5</string>
+    <string>0.0</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_startRecording">
    <property name="geometry">
     <rect>
      <x>660</x>
-     <y>430</y>
+     <y>410</y>
      <width>201</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Start recording</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
@@ -234,12 +237,12 @@
     <rect>
      <x>660</x>
      <y>190</y>
-     <width>131</width>
+     <width>151</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Select save directory</string>
+    <string>Select directory to save</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_saveDirectory">
@@ -277,7 +280,7 @@
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
    <property name="plainText">
-    <string>test</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -306,6 +309,19 @@
     <string>Cam</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_recordingStop">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>460</y>
+     <width>51</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </widget>
   <zorder>display_label</zorder>
   <zorder>display_binary</zorder>
   <zorder>label_maxThr_2</zorder>
@@ -326,6 +342,7 @@
   <zorder>plainTextEdit_name</zorder>
   <zorder>label_3</zorder>
   <zorder>label_2</zorder>
+  <zorder>pushButton_recordingStop</zorder>
  </widget>
  <resources/>
  <connections/>
