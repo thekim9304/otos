@@ -95,7 +95,7 @@ class MyApp(QMainWindow, main_ui):
 
         # 버튼에 기능 연결
         self.pushButton_GetFiles.clicked.connect(self.getFilesButton)
-        self.pushButton_start.clicked.connect(self.startMeasurement)
+        # self.pushButton_start.clicked.connect(self.startMeasurement)
         self.pushButton_saveDirectory.clicked.connect(self.selectDirectory_button)
         self.pushButton_csvSave.clicked.connect(self.save_csv)
         self.pushButton_quit.clicked.connect(self.program_quit)
@@ -109,9 +109,9 @@ class MyApp(QMainWindow, main_ui):
         self.clicked_save_csv = True
 
         csv_saveDir = self.label_saveDirectory.text()
-        avi_filename = os.path.split(self.video_paths[self.idx_video])
-        filename = os.path.splitext(avi_filename[-1])[0]
-        self.csv_file = open(f'{csv_saveDir}/{filename}.csv', 'w', newline='')
+        save_name = self.plainTextEdit_csvName.toPlainText()
+        print(save_name)
+        self.csv_file = open(f'{csv_saveDir}/{save_name}.csv', 'w', newline='')
         csvwriter = csv.writer(self.csv_file)
         csvwriter.writerow(['frame', 'pupil_size'])
 
@@ -158,8 +158,8 @@ class MyApp(QMainWindow, main_ui):
                 # if self.press_esc or self.change_video or self.clicked:
                 if self.press_esc or self.change_video or self.clicked_save_csv:
                     self.fig = plt.figure()
-                    self.plot_xs = []
-                    self.plot_ys = []
+                    # self.plot_xs = []
+                    # self.plot_ys = []
                     self.max_y = 0
                     self.roi_coord = []
                     self.pupil_info = []
@@ -266,6 +266,11 @@ class MyApp(QMainWindow, main_ui):
             self.clicked = False
             self.change_video = True
             self.csv_file = None
+            self.change_frame = True
+            self.clicked_save_csv = False
+            avi_filename = os.path.split(self.video_paths[self.idx_video])
+            filename = os.path.splitext(avi_filename[-1])[0]
+            self.plainTextEdit_csvName.setPlainText(filename)
             self.total_frames = self.cap.get(cv2.CAP_PROP_FRAME_COUNT)
             self.plot_xs = list(range(int(self.total_frames)))
             self.plot_ys = [0] * int(self.total_frames)
@@ -280,10 +285,6 @@ class MyApp(QMainWindow, main_ui):
             if 0 <= rel_x <= 1 and 0 <= rel_y < 1:
                 self.clicked = True
                 self.roi_coord = [rel_x, rel_y, rel_x, rel_y]
-            # else:
-            #     self.clicked = False
-            #     self.roi_coord = []
-            #     self.pupil_info = []
 
             self._showImage(self.ori_img, self.display_label, slide=True)
 
@@ -313,6 +314,13 @@ class MyApp(QMainWindow, main_ui):
             x1, y1, x2, y2 = self.roi_coord
             if x1 == x2 or y1 == y2:
                 self.roi_coord = []
+            else:
+                if x1 > x2:
+                    self.roi_coord[2] = x1
+                    self.roi_coord[0] = x2
+                if y1 > y2:
+                    self.roi_coord[3] = y1
+                    self.roi_coord[1] = y2
 
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_Escape:
@@ -320,12 +328,12 @@ class MyApp(QMainWindow, main_ui):
             self.close()
         elif e.key() == Qt.Key_Space:
             if not self.change_frame:
-                print('■ Press Space bar')
-                print('    Video Stop')
+                # print('■ Press Space bar')
+                # print('    Video Stop')
                 self.change_frame = True
             else:
-                print('▶ Press Space bar')
-                print('    Video Restart')
+                # print('▶ Press Space bar')
+                # print('    Video Restart')
                 self.change_frame = False
                 self.startMeasurement()
 
@@ -420,6 +428,7 @@ class MyApp(QMainWindow, main_ui):
     def initUI(self):
         self.setWindowTitle('Visual fatigue measurement')
         self.setWindowIcon(QIcon('icon.jpg'))
+        self.setFixedSize(924, 760)
         self._center()
         self.show()
 

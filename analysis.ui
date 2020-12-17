@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>929</width>
-    <height>752</height>
+    <width>924</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>660</x>
-     <y>180</y>
+     <y>190</y>
      <width>251</width>
      <height>131</height>
     </rect>
@@ -43,7 +43,7 @@
    <property name="geometry">
     <rect>
      <x>660</x>
-     <y>140</y>
+     <y>150</y>
      <width>251</width>
      <height>31</height>
     </rect>
@@ -52,38 +52,12 @@
     <string>비디오 선택</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_start">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>430</y>
-     <width>251</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>  시작</string>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progressBar">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>600</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>0</number>
-   </property>
-  </widget>
   <widget class="QSlider" name="horizontalSlider_max">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>660</x>
      <y>350</y>
-     <width>231</width>
+     <width>241</width>
      <height>22</height>
     </rect>
    </property>
@@ -97,9 +71,9 @@
   <widget class="QSlider" name="horizontalSlider_min">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>660</x>
      <y>380</y>
-     <width>231</width>
+     <width>241</width>
      <height>22</height>
     </rect>
    </property>
@@ -194,9 +168,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>500</y>
-     <width>641</width>
-     <height>241</height>
+     <y>540</y>
+     <width>901</width>
+     <height>211</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -209,8 +183,8 @@
   <widget class="QLabel" name="label_videoTime">
    <property name="geometry">
     <rect>
-     <x>790</x>
-     <y>580</y>
+     <x>670</x>
+     <y>520</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -222,8 +196,8 @@
   <widget class="QCheckBox" name="checkBox_showGraph">
    <property name="geometry">
     <rect>
-     <x>660</x>
-     <y>560</y>
+     <x>810</x>
+     <y>510</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -242,7 +216,7 @@
    <property name="geometry">
     <rect>
      <x>660</x>
-     <y>10</y>
+     <y>30</y>
      <width>251</width>
      <height>31</height>
     </rect>
@@ -255,9 +229,9 @@
    <property name="geometry">
     <rect>
      <x>660</x>
-     <y>50</y>
+     <y>70</y>
      <width>251</width>
-     <height>71</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -268,6 +242,81 @@
    </property>
    <property name="wordWrap">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_video">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>510</y>
+     <width>641</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_videoFrame">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>500</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0/0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_csvSave">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>460</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>저장</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_quit">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>0</y>
+     <width>81</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>프로그램 종료</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="plainTextEdit_csvName">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>420</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>400</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>csv 이름</string>
    </property>
   </widget>
  </widget>
