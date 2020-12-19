@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1198</width>
+    <height>746</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="display_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>641</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_video">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>190</y>
+     <width>251</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_GetFiles">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>150</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>비디오 선택</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_max">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>140</y>
+     <width>241</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_min">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>170</y>
+     <width>241</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="display_binary">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>360</y>
+     <width>161</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr">
+   <property name="geometry">
+    <rect>
+     <x>1040</x>
+     <y>130</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_minThr">
+   <property name="geometry">
+    <rect>
+     <x>1040</x>
+     <y>160</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_2">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>130</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>thr_max</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_3">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>160</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>thr_min</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="display_graph">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>530</y>
+     <width>901</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_videoTime">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>490</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>00:00:00 / 00:00:00</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_showGraph">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>490</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="tabletTracking">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Show Graph</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_saveDirectory">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>30</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>csv 저장 폴더 선택</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_saveDirectory">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>70</y>
+     <width>251</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_video">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>500</y>
+     <width>901</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_videoFrame">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>470</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0/0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_csvSave">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>390</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>저장</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_quit">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>0</y>
+     <width>81</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>프로그램 종료</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="plainTextEdit_csvName">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>350</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>330</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>csv 이름</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>120</y>
+     <width>20</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_4">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>100</y>
+     <width>161</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="text">
+    <string>동공 분할</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line_2">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>30</y>
+     <width>20</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_5">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>10</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="text">
+    <string>반사광 분할</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>240</y>
+     <width>20</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_6">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>220</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="text">
+    <string>동공 영역 필터링</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_reflection_min">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>50</y>
+     <width>241</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="value">
+    <number>255</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_reflection_min">
+   <property name="geometry">
+    <rect>
+     <x>1040</x>
+     <y>40</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_maxThr_8">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>40</y>
+     <width>56</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>thr_min</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

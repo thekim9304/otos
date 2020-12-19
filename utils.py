@@ -25,11 +25,48 @@ def cvtPixmap(frame, img_size):
 
     return qpixmap
 
+def fill_reflected_light(ori_img, min_thr, iteration=2, add_inter_idx=1):
+    if len(ori_img.shape) == 3:
+        ori_img = cv2.cvtColor(ori_img, cv2.COLOR_BGR2GRAY)
+
+    ret, img_thresh = cv2.threshold(ori_img, min_thr, 255, cv2.THRESH_BINARY)
+
+    kernel = np.ones((3, 3), np.uint8)
+    img_thresh = cv2.dilate(img_thresh, kernel, iterations=iteration)
+
+    draw_img = ori_img.copy()
+
+    reflection_points = np.where(img_thresh == 255)
+
+    for y, x in zip(reflection_points[0], reflection_points[1]):
+        l_x, r_x = x - 1, x + 1
+        l_x = l_x if l_x >= 0 else 0
+        r_x = r_x if r_x < img_thresh.shape[1] else img_thresh.shape[1] - 1
+
+        while l_x >= 0 and img_thresh[y][l_x] == 255:
+            l_x -= 1
+        while r_x < (img_thresh.shape[1] - 1) and img_thresh[y][r_x] == 255:
+            r_x += 1
+
+        l_x -= add_inter_idx
+        r_x += add_inter_idx
+        l_x = l_x if l_x >= 0 else 0
+        r_x = r_x if r_x < img_thresh.shape[1] else img_thresh.shape[1] - 1
+
+        l_val = int(ori_img[y][l_x])
+        r_val = int(ori_img[y][r_x])
+        draw_img[y][x] = int((l_val + r_val) / 2)
+
+    return draw_img
+
 
 def getPupil(img, thresh):
     res = []
 
-    gray = cv2.cvtColor(~img, cv2.COLOR_BGR2GRAY)
+    if len(img.shape) == 3:
+        gray = cv2.cvtColor(~img, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img
     ret, thresh_gray = cv2.threshold(gray, thresh[0], thresh[1], cv2.THRESH_BINARY)
     contours, hierarchy = cv2.findContours(thresh_gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     for contour in contours:
