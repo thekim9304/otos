@@ -55,7 +55,8 @@ class MyApp(QMainWindow, main_ui):
         # 동공 크기 csv 저장 변수
         self.csv_file = None
         self.plot_xs = []
-        self.plot_ys = []
+        self.plot_ys_radius = []
+        self.plot_ys_diameter = []
 
         # 버튼에 기능 연결
         self.pushButton_GetFiles.clicked.connect(self.getFilesButton)
@@ -78,10 +79,10 @@ class MyApp(QMainWindow, main_ui):
         print(save_name)
         self.csv_file = open(f'{csv_saveDir}/{save_name}.csv', 'w', newline='')
         csvwriter = csv.writer(self.csv_file)
-        csvwriter.writerow(['frame', 'pupil_size'])
+        csvwriter.writerow(['frame', 'pupil_size_radius', 'pupil_size_diameter'])
 
-        for xs, ys in zip(self.plot_xs, self.plot_ys):
-            csvwriter.writerow([f'{xs}', f'{ys}'])
+        for xs, ys_radius, ys_diameter in zip(self.plot_xs, self.plot_ys_radius, self.plot_ys_diameter):
+            csvwriter.writerow([f'{xs}', f'{ys_radius}', f'{ys_diameter}'])
 
         self.csv_file.close()
 
@@ -109,8 +110,9 @@ class MyApp(QMainWindow, main_ui):
         e_idx = frame_idx + self.plot_limit
         e_idx = -1 if e_idx > self.total_frames else e_idx
         show_xs = self.plot_xs[s_idx: e_idx]
-        show_ys = self.plot_ys[s_idx: e_idx]
-        graph = self.getGraph(show_xs, show_ys, frame_idx)
+        show_ys_radius = self.plot_ys_radius[s_idx: e_idx]
+        show_ys_diameter = self.plot_ys_diameter[s_idx: e_idx]
+        graph = self.getGraph(show_xs, show_ys_radius, show_ys_diameter, frame_idx)
 
         self._showImage(graph, self.display_graph)
 
@@ -160,36 +162,54 @@ class MyApp(QMainWindow, main_ui):
 
                     # 동공 크기 값 측정
                     if self.pupil_info:
-                        self.plot_ys[idx_of_frame] = self.pupil_info[0][1]
+                        info = self.pupil_info[0]
+                        x, y = info[0]
+                        rect_roi = info[2]
+                        box_x, box_y, width, height = rect_roi
+                        box_x = box_x - self.add_radius if box_x - self.add_radius >= 0 else 0
+                        box_y = box_y - self.add_radius if box_y - self.add_radius >= 0 else 0
+                        width = width + (2 * self.add_radius) if width + (2 * self.add_radius) <= roi.shape[1] else roi.shape[1]
+                        height = height + (2 * self.add_radius) if height + (2 * self.add_radius) <= roi.shape[0] else roi.shape[0]
+                        img_eye_only = binary_eye[box_y:box_y + height, box_x:box_x + width].copy()
 
-                        # coord_mask = np.zeros((roi.shape[0], roi.shape[1]), np.uint8)
-                        # info = self.pupil_info[0]
-                        # x, y = info[0]
+                        cv2.imshow('dfsdf', img_eye_only)
+                        img_eye_only = np.where(img_eye_only == 255, 1, img_eye_only)
+
+                        cv2.rectangle(roi, (box_x, box_y), ((box_x + width), (box_y + height)), (0, 255, 255), 2)
+
                         # cv2.circle(coord_mask, (x, y), info[1] + self.add_radius, 255, -1)
-                        #
                         # img_eye_only = cv2.bitwise_and(binary_eye, coord_mask)
-                        #
-                        # max_idx, max_val = 0, 0
-                        # for col_idx in range(img_eye_only.shape[0]):
-                        #     col_val = sum(img_eye_only[col_idx])
-                        #     if max_val < col_val:
-                        #         max_idx = col_idx
-                        #         max_val = col_val
-                        #
-                        # l_row, r_row = 0, img_eye_only.shape[1]
-                        # for row_idx in range(img_eye_only.shape[1] - 1):
-                        #     row_val = sum(img_eye_only[:, row_idx])
-                        #     if row_val != 0:
-                        #         l_row = row_idx
-                        # for row_idx in range(img_eye_only.shape[1] - 1, 0, -1):
-                        #     row_val = sum(img_eye_only[:, row_idx])
-                        #     if row_val != 0:
-                        #         r_row = row_idx
-                        #
-                        # cv2.line(roi, (l_row, max_idx), (r_row, max_idx), (0, 0, 255), 2)
-                        # self.ori_img[y1:y2, x1:x2] = roi
+
+                        max_idx, max_val = 0, 0
+                        for col_idx in range(img_eye_only.shape[0]):
+                            col_val = sum(img_eye_only[col_idx])
+                            if max_val < col_val:
+                                max_idx = col_idx
+                                max_val = col_val
+
+                        l_row, r_row = 0, img_eye_only.shape[1]
+                        for row_idx in range(img_eye_only.shape[1] - 1):
+                            row_val = sum(img_eye_only[:, row_idx])
+                            if row_val != 0:
+                                l_row = row_idx
+                        for row_idx in range(img_eye_only.shape[1] - 1, 0, -1):
+                            row_val = sum(img_eye_only[:, row_idx])
+                            if row_val != 0:
+                                r_row = row_idx
+
+                        cv2.line(roi,
+                                 (box_x + l_row, box_y + max_idx),
+                                 (box_x + r_row, box_y + max_idx),
+                                 (0, 0, 255), 2)
+                        self.ori_img[y1:y2, x1:x2] = roi
+
+                        print(idx_of_frame)
+                        print(len(self.plot_ys_diameter))
+                        self.plot_ys_diameter[idx_of_frame] = max_val
+                        self.plot_ys_radius[idx_of_frame] = self.pupil_info[0][1]
                     else:
-                        self.plot_ys[idx_of_frame] = 0
+                        self.plot_ys_diameter[idx_of_frame] = 0
+                        self.plot_ys_radius[idx_of_frame] = 0
 
                     if self.checkBox_showGraph.isChecked():
                         # sequence graph
@@ -199,8 +219,9 @@ class MyApp(QMainWindow, main_ui):
                         e_idx = idx_of_frame + self.plot_limit
                         e_idx = -1 if e_idx > self.total_frames else e_idx
                         show_xs = self.plot_xs[s_idx: e_idx]
-                        show_ys = self.plot_ys[s_idx: e_idx]
-                        graph = self.getGraph(show_xs, show_ys, idx_of_frame)
+                        show_ys_radius = self.plot_ys_radius[s_idx: e_idx]
+                        show_ys_diameter = self.plot_ys_diameter[s_idx: e_idx]
+                        graph = self.getGraph(show_xs, show_ys_radius, show_ys_diameter, idx_of_frame)
 
                         self._showImage(graph, self.display_graph)
 
@@ -215,6 +236,7 @@ class MyApp(QMainWindow, main_ui):
                 elif self.display_img:
                     break
                 else:
+                    self.save_csv()
                     break
 
         self.clicked_start = False
@@ -273,7 +295,8 @@ class MyApp(QMainWindow, main_ui):
             self.plainTextEdit_csvName.setPlainText(filename)
             self.total_frames = self.cap.get(cv2.CAP_PROP_FRAME_COUNT)
             self.plot_xs = list(range(int(self.total_frames)))
-            self.plot_ys = [0] * int(self.total_frames)
+            self.plot_ys_radius = [0] * int(self.total_frames + 1)
+            self.plot_ys_diameter = [0] * int(self.total_frames + 1)
             self.horizontalSlider_video.setRange(0, self.total_frames)
             self._showImage(self.ori_img, self.display_label)
 
@@ -444,15 +467,17 @@ class MyApp(QMainWindow, main_ui):
             self._showImage(post_img, self.display_label)
             self._showImage(binary_eye, self.display_binary)
 
-    def getGraph(self, xs, ys, pre_idx):
-        max_y = max(ys)
+    def getGraph(self, xs, ys_radius, ys_diameter, pre_idx):
+        max_y = max(ys_diameter)
         if self.max_y < max_y:
             self.max_y = max_y
 
         ax = self.fig.add_subplot(1, 1, 1)
 
         ax.clear()
-        ax.plot(xs, ys)
+        # ax.plot(xs, ys_radius)
+        ax.plot(xs, ys_diameter)
+
         plt.scatter(pre_idx, max_y + 8, marker='o', color='salmon')
         plt.ylim(-1, self.max_y + 10)
         plt.xticks(rotation=45, ha='right')
