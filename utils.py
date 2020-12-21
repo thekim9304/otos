@@ -25,6 +25,7 @@ def cvtPixmap(frame, img_size):
 
     return qpixmap
 
+
 def fill_reflected_light(ori_img, min_thr, iteration=2, add_inter_idx=1):
     if len(ori_img.shape) == 3:
         ori_img = cv2.cvtColor(ori_img, cv2.COLOR_BGR2GRAY)
@@ -80,7 +81,7 @@ def getPupil(img, thresh):
         fill_condition = (abs(1 - (area / (math.pi * math.pow(radius, 2.0)))) <= 0.3)
 
         if area_condition and symmetry_condition and fill_condition:
-            res.append(((int(x + radius), int(y + radius)), int(1 * radius)))
+            res.append(((int(x + radius), int(y + radius)), int(1 * radius), rect))
 
     return res, thresh_gray
 
